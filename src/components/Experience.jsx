@@ -10,13 +10,15 @@ import Grass from "./Grass"
 export default function Experience(){
 
     const fox = useRef()
-
+    // const foxAnimation = 'Walk'
+    
     const { foxPosition } = useControls ('fox position', {
         foxPosition : {value: [0, -1, 0]}
     })
-    const { foxNamePosition } = useControls ('fox name position', {
-        foxNamePosition : {value: [0, 92, 43]}
+    const {foxAnimation} = useControls ('fox animation', {
+        foxAnimation: { options: [ 'Walk', 'Run', 'Survey' ] }
     })
+    
 
     useEffect(()=>
     {
@@ -28,20 +30,18 @@ export default function Experience(){
 
         <OrbitControls makeDefault/>
 
-        <directionalLight
-            castShadow 
+        <directionalLight 
             position={ [ 1, 2, 3 ] } 
             intensity={ 1.5 } 
-            shadow-normalBias={ 1 }
         />
 
         <ambientLight intensity={ 0.5 } />
 
         <Grass />
         
-        <Fox ref={fox} castShadow scale={ 0.02 } position={foxPosition} > 
+        <Fox ref={fox} foxAnimation={foxAnimation}  scale={ 0.02 } position={foxPosition} > 
             <Html
-                position={ foxNamePosition }
+                position={ [0, 92, 43] }
                 wrapperClass="label"
                 center
                 distanceFactor={ 8 }
