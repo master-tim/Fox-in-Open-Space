@@ -7,21 +7,18 @@
     "dev": "react-scripts start",
     "build": "react-scripts build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dzhoroev1/running_fox.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/dzhoroev1/running_fox/issues"
-  },
-  "homepage": "https://github.com/dzhoroev1/running_fox#readme",
   "dependencies": {
+    "@react-three/drei": "^9.32.3",
+    "@react-three/fiber": "^8.8.7",
+    "leva": "^0.9.34",
+    "r3f-perf": "^6.5.0",
     "react": "^18.2.0",
-    "react-dom": "18.2",
-    "react-scripts": "5.0"
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1",
+    "three": "^0.145.0"
   },
   "browserslist": {
     "production": [
