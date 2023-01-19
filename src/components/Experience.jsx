@@ -10,13 +10,13 @@ import Grass from "./Grass"
 export default function Experience(){
 
     const fox = useRef()
-    // const foxAnimation = 'Walk'
+    const foxAnimationOptions = ['Walk', 'Run', 'Survey']
     
     const { foxPosition } = useControls ('fox position', {
         foxPosition : {value: [0, -1, 0]}
     })
     const {foxAnimation} = useControls ('fox animation', {
-        foxAnimation: { options: [ 'Walk', 'Run', 'Survey' ] }
+        foxAnimation: { options: foxAnimationOptions }
     })
     
 
