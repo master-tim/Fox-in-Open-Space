@@ -1,6 +1,6 @@
 import { OrbitControls, Html } from "@react-three/drei"
 import { Perf } from "r3f-perf"
-import { useRef} from "react"
+import { useRef, useEffect } from "react"
 import * as THREE from "three"
 import { useControls } from "leva"
 
@@ -11,12 +11,17 @@ export default function Experience(){
 
     const fox = useRef()
 
-    // const directionalLight = useRef()
-    // useHelper(directionalLight, THREE.DirectionalLightHelper, 1)
-
     const { foxPosition } = useControls ('fox position', {
         foxPosition : {value: [0, -1, 0]}
     })
+    const { foxNamePosition } = useControls ('fox name position', {
+        foxNamePosition : {value: [0, 92, 43]}
+    })
+
+    useEffect(()=>
+    {
+        
+    }, [])
 
     return <>
         <Perf position="top-left"/>
@@ -34,16 +39,17 @@ export default function Experience(){
 
         <Grass />
         
-        <Fox ref={fox} castShadow scale={ 0.02 } position={foxPosition} />
+        <Fox ref={fox} castShadow scale={ 0.02 } position={foxPosition} > 
+            <Html
+                position={ foxNamePosition }
+                wrapperClass="label"
+                center
+                distanceFactor={ 8 }
+                occlude={ [ fox ] }
+            >
+                하카
+            </Html>
+        </Fox>
 
-        <Html
-            position={ [ 0, 1, 1 ] }
-            wrapperClass="label"
-            center
-            distanceFactor={ 8 }
-            occlude={ [ fox ] }
-        >
-            하카
-        </Html>
     </>
 }
