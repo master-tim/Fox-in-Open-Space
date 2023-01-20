@@ -11,29 +11,68 @@ export default function Experience(){
 
     const [key, setKey] = useState('')
     const fox = useRef()
-    const foxAnimationOptions = ['Walk', 'Run', 'Survey']
-
-    const handleKeyPress = (e) =>
-    {
-        setKey(e.key)
-    }
+    const foxAnimationOptions = ['Walk', 'Run', 'Survey', 'Stop']
     
     const { foxPosition } = useControls ('fox position', {
         foxPosition : {value: [0, -1, 0]}
     })
-    const {foxAnimation} = useControls ('fox animation', {
-        foxAnimation: { options: foxAnimationOptions }
-    })
+    // let {foxAnimation} = useControls ('fox animation', {
+    //     foxAnimation: { options: foxAnimationOptions }
+    // })
+    let foxAnimation = 'Walk'
     
+    // window.addEventListener('keydown', e =>
+    // {
+    //     // console.log(e.code)
+    //     switch (e.code)
+    //     {
+    //         case 'KeyW': foxAnimation = foxAnimationOptions[0] 
+    //         break
+    //         case 'KeyS': foxAnimation = foxAnimationOptions[3] 
+    //         break
+    //         case 'KeyC': foxAnimation = foxAnimationOptions[2]
+    //         break
+    //         case 'KeyE': foxAnimation = foxAnimationOptions[1]
+    //         break
+    //     }
+    //     console.log(foxAnimation)
 
-    useEffect(()=>
+    // })
+    // useEffect(()=>
+    // {
+    //     window.addEventListener("keypress", (e) => {setKey(e.code)})
+    //     // console.log(key)
+    //     switch (key)
+    //     {
+    //         case 'KeyW': foxAnimation = foxAnimationOptions[0] 
+    //         break
+    //         case 'KeyS': foxAnimation = foxAnimationOptions[3] 
+    //         break
+    //         case 'KeyC': foxAnimation = foxAnimationOptions[2]
+    //         break
+    //         case 'KeyE': foxAnimation = foxAnimationOptions[1]
+    //         break
+    //     }
+    //     console.log(foxAnimation)
+    //     return () => {
+    //         window.removeEventListener("keypress", ()=>{});
+    //     };
+    // }, [key])
+
+    window.addEventListener("keypress", (e) => {setKey(e.code)})
+    // console.log(key)
+    switch (key)
     {
-        document.addEventListener("keydown", handleKeyPress)
-        console.log(key)
-        return () => {
-            document.removeEventListener("keydown", handleKeyPress);
-        };
-    }, [[key]])
+        case 'KeyW': foxAnimation = foxAnimationOptions[0] 
+        break
+        case 'KeyS': foxAnimation = foxAnimationOptions[3] 
+        break
+        case 'KeyC': foxAnimation = foxAnimationOptions[2]
+        break
+        case 'KeyE': foxAnimation = foxAnimationOptions[1]
+        break
+    }
+    console.log(foxAnimation)
 
     return <>
     
