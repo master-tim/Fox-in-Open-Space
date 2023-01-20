@@ -1,6 +1,6 @@
 import { OrbitControls, Html } from "@react-three/drei"
 import { Perf } from "r3f-perf"
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import * as THREE from "three"
 import { useControls } from "leva"
 
@@ -9,8 +9,14 @@ import Grass from "./Grass"
 
 export default function Experience(){
 
+    const [key, setKey] = useState('')
     const fox = useRef()
     const foxAnimationOptions = ['Walk', 'Run', 'Survey']
+
+    const handleKeyPress = (e) =>
+    {
+        setKey(e.key)
+    }
     
     const { foxPosition } = useControls ('fox position', {
         foxPosition : {value: [0, -1, 0]}
@@ -22,10 +28,15 @@ export default function Experience(){
 
     useEffect(()=>
     {
-        
-    }, [])
+        document.addEventListener("keydown", handleKeyPress)
+        console.log(key)
+        return () => {
+            document.removeEventListener("keydown", handleKeyPress);
+        };
+    }, [[key]])
 
     return <>
+    
         <Perf position="top-left"/>
 
         <OrbitControls makeDefault/>
