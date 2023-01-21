@@ -16,51 +16,11 @@ export default function Experience(){
     const { foxPosition } = useControls ('fox position', {
         foxPosition : {value: [0, -1, 0]}
     })
-    // let {foxAnimation} = useControls ('fox animation', {
-    //     foxAnimation: { options: foxAnimationOptions }
-    // })
-    let foxAnimation = 'Walk'
     
-    // window.addEventListener('keydown', e =>
-    // {
-    //     // console.log(e.code)
-    //     switch (e.code)
-    //     {
-    //         case 'KeyW': foxAnimation = foxAnimationOptions[0] 
-    //         break
-    //         case 'KeyS': foxAnimation = foxAnimationOptions[3] 
-    //         break
-    //         case 'KeyC': foxAnimation = foxAnimationOptions[2]
-    //         break
-    //         case 'KeyE': foxAnimation = foxAnimationOptions[1]
-    //         break
-    //     }
-    //     console.log(foxAnimation)
-
-    // })
-    // useEffect(()=>
-    // {
-    //     window.addEventListener("keypress", (e) => {setKey(e.code)})
-    //     // console.log(key)
-    //     switch (key)
-    //     {
-    //         case 'KeyW': foxAnimation = foxAnimationOptions[0] 
-    //         break
-    //         case 'KeyS': foxAnimation = foxAnimationOptions[3] 
-    //         break
-    //         case 'KeyC': foxAnimation = foxAnimationOptions[2]
-    //         break
-    //         case 'KeyE': foxAnimation = foxAnimationOptions[1]
-    //         break
-    //     }
-    //     console.log(foxAnimation)
-    //     return () => {
-    //         window.removeEventListener("keypress", ()=>{});
-    //     };
-    // }, [key])
+    let foxAnimation = 'Walk'
 
     window.addEventListener("keypress", (e) => {setKey(e.code)})
-    // console.log(key)
+
     switch (key)
     {
         case 'KeyW': foxAnimation = foxAnimationOptions[0] 
