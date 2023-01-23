@@ -6,6 +6,7 @@ import { useControls } from "leva"
 
 import Fox from "./Fox"
 import Grass from "./Grass"
+import { Canvas } from "@react-three/fiber"
 
 export default function Experience(){
 
@@ -20,6 +21,13 @@ export default function Experience(){
     let foxAnimation = 'Walk'
 
     window.addEventListener("keypress", (e) => {setKey(e.code)})
+    
+    useEffect(()=>
+    {
+        //for camera change
+    }, [])
+
+    // console.log(Canvas);
 
     switch (key)
     {
@@ -32,7 +40,7 @@ export default function Experience(){
         case 'KeyE': foxAnimation = foxAnimationOptions[1]
         break
     }
-    console.log(foxAnimation)
+    // console.log(foxAnimation)
 
     return <>
     
