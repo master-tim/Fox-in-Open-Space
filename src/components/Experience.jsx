@@ -1,11 +1,12 @@
 import { OrbitControls, Html } from "@react-three/drei"
 import { Perf } from "r3f-perf"
-import { useRef, useEffect, useState } from "react"
-import * as THREE from "three"
+import React, { useRef, useEffect, useState } from "react"
+// import * as THREE from "three"
 import { useControls } from "leva"
 
 import Fox from "./Fox"
 import Grass from "./Grass"
+import { useFrame } from "@react-three/fiber"
 
 export default function Experience(){
 
@@ -26,7 +27,15 @@ export default function Experience(){
         //for camera change
     }, [])
 
-    // console.log(Canvas);
+    useFrame((state) => 
+    {
+        // console.log(state.camera)
+        // state.camera.position.x = 5*Math.sin(state.clock.elapsedTime)
+        // state.camera.position.z = 5*Math.cos(state.clock.elapsedTime)
+
+    })
+    // THREE.Camera.getWorldDirection(THREE.Vector3(0, 0, 0))
+
 
     switch (key)
     {
@@ -45,7 +54,7 @@ export default function Experience(){
     
         <Perf position="top-left"/>
 
-        <OrbitControls makeDefault/>
+        {/* <OrbitControls makeDefault/> */}
 
         <directionalLight 
             position={ [ 1, 2, 3 ] } 

@@ -9,7 +9,7 @@ export default function Fox(props)
 
     useEffect(()=>
     {
-        console.log('recieved props: ', props.foxAnimation)
+        // console.log('recieved props: ', props.foxAnimation)
         
         if(props.foxAnimation == 'Stop')
         {
@@ -26,7 +26,7 @@ export default function Fox(props)
         return () =>
         {
             action.fadeOut(0.1)
-            console.log('fade out')
+            // console.log('fade out')
         }
     }, [props.foxAnimation] )
 
