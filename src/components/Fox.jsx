@@ -1,6 +1,4 @@
 import { useAnimations, useGLTF } from "@react-three/drei"
-import { act } from "@react-three/fiber"
-import { useControls } from "leva"
 import { useEffect, useRef } from "react"
 
 export default function Fox(props)

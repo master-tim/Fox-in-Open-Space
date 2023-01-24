@@ -6,7 +6,6 @@ import { useControls } from "leva"
 
 import Fox from "./Fox"
 import Grass from "./Grass"
-import { Canvas } from "@react-three/fiber"
 
 export default function Experience(){
 
