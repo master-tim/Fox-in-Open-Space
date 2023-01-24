@@ -1,4 +1,4 @@
-import { useAnimations, useGLTF } from "@react-three/drei"
+import { Html, useAnimations, useGLTF } from "@react-three/drei"
 import { useEffect, useRef } from "react"
 
 export default function Fox(props)
@@ -30,5 +30,15 @@ export default function Fox(props)
         }
     }, [props.foxAnimation] )
 
-    return <primitive {...props} object={fox.scene} />
+    return <primitive {...props} object={fox.scene} >
+        <Html
+                position={ [0, 92, 43] }
+                wrapperClass="label"
+                center
+                distanceFactor={ 8 }
+                occlude={ [ fox ] }
+            >
+                {props.foxName}
+            </Html>
+    </primitive>
 }

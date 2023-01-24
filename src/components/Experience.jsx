@@ -8,6 +8,15 @@ import Fox from "./Fox"
 import Grass from "./Grass"
 import { useFrame } from "@react-three/fiber"
 
+function randPos(){
+    let arr = []
+    arr.push(Math.random())
+    arr.push(-1)
+    arr.push(Math.random())
+
+    return arr
+}
+
 export default function Experience(){
 
     const [key, setKey] = useState('')
@@ -18,18 +27,17 @@ export default function Experience(){
         foxPosition : {value: [0, -1, 0]}
     })
     
+    
     let foxAnimation = 'Walk'
 
     window.addEventListener("keypress", (e) => {setKey(e.code)})
     
-    useEffect(()=>
-    {
-        //for camera change
-    }, [])
 
     useFrame((state) => 
     {
-        // console.log(state.camera)
+        // console.log(state.camera.position)
+        // console.log([Math.random(), Math.random(), Math.random() ])
+        // console.log(randPos());
         // state.camera.position.x = 5*Math.sin(state.clock.elapsedTime)
         // state.camera.position.z = 5*Math.cos(state.clock.elapsedTime)
 
@@ -54,7 +62,7 @@ export default function Experience(){
     
         <Perf position="top-left"/>
 
-        {/* <OrbitControls makeDefault/> */}
+        <OrbitControls makeDefault/>
 
         <directionalLight 
             position={ [ 1, 2, 3 ] } 
@@ -65,17 +73,8 @@ export default function Experience(){
 
         <Grass />
         
-        <Fox ref={fox} foxAnimation={foxAnimation}  scale={ 0.02 } position={foxPosition} > 
-            <Html
-                position={ [0, 92, 43] }
-                wrapperClass="label"
-                center
-                distanceFactor={ 8 }
-                occlude={ [ fox ] }
-            >
-                하카
-            </Html>
-        </Fox>
+        <Fox ref={fox} foxAnimation={foxAnimation}  scale={ 0.02 } position={foxPosition} foxName='하카'/> 
+
 
     </>
 }
