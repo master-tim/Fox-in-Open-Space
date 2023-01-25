@@ -1,14 +1,17 @@
 import { Html, useAnimations, useGLTF } from "@react-three/drei"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef,useState } from "react"
 
 export default function Fox(props)
 {
     const fox = useGLTF('../Fox/glTF/Fox.gltf')
+
+    const [count, setCount] = useState(parseInt(localStorage.getItem(props.keyName) ?? 0))
     const animations = useAnimations(fox.animations, fox.scene)
     
 
     useEffect(()=>
     {
+        console.log(props.position)
         const action = animations.actions[props.foxAnimation]
         
         action
@@ -19,9 +22,13 @@ export default function Fox(props)
         return () =>
         {
             action.fadeOut(0.1)
-            // console.log('fade out')
+            localStorage.removeItem(props.keyName)
         }
     } )
+
+    useEffect(() => {
+        localStorage.setItem(props.keyName, count)
+    }, [count])
 
     return <primitive {...props} object={fox.scene} >
         <Html
