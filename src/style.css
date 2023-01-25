@@ -12,6 +12,7 @@ body,
 .label > div
 {
     font-family: Helvetica, Arial;
+    font-size:x-small;
     position: absolute;
     background: salmon;
     color: white;

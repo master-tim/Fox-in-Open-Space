@@ -1,27 +1,25 @@
-import { OrbitControls } from "@react-three/drei"
+import * as THREE from "three"
 import { Perf } from "r3f-perf"
 import React, { useRef, useEffect, useState, useMemo, Suspense } from "react"
-import { useFrame } from "@react-three/fiber"
+import { useFrame, useGraph } from "@react-three/fiber"
+import Stacy from "./Stacy"
 
-import Fox from "./Fox"
+function Rig() {
+    return useFrame((state) => {
+      state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, 1.5 + state.mouse.x / 4, 0.075)
+      state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, 1.5 + state.mouse.y / 4, 0.075)
+    })
+  }
 
 export default function Experience(){
 
-    const numberOfFoxes = 5
+    const numberOfModels = 3
 
-    useFrame((state) => 
-    {
-        // state.camera.position.x = 5*Math.sin(state.clock.elapsedTime)
-        // state.camera.position.y = 3
-        // state.camera.position.z = 5*Math.cos(state.clock.elapsedTime)
-
-    })
-    
-    const positionFox = useMemo(()=>
+    const positionModels = useMemo(()=>
     {
         const position = []
 
-        for(let i=0; i<numberOfFoxes; i++){
+        for(let i=0; i<numberOfModels; i++){
             let temp = []
             temp.push(5*(Math.random()-0.5))
             temp.push(-1)
@@ -30,54 +28,61 @@ export default function Experience(){
         }
         
         return position
-    }, [numberOfFoxes])
+    }, [numberOfModels])
+
+    const modelNames = [
+     'Debra',
+     'Judith',
+     'Anne',
+     'Janet',
+     'Carolyn',
+     'Mildred',
+     'Deborah',
+     'Dorothy',
+     'Susan',
+     'Norma',
+     'Cheryl',
+     'Barbara',
+     'Ashley',
+     'Linda',
+     'Brenda',
+     'Laura',
+     'Tammy',
+     'Emily',
+     'Elizabeth',
+     'Irene',
+     'Paula',
+     'Amy',
+     'Frances',
+     'Christina',
+     'Cynthia',
+    ]
 
     return <>
     
         <Perf position="top-left"/>
 
-        <OrbitControls makeDefault/>
-
-        <directionalLight position={ [ 1, 2, 3 ] } intensity={ 1.5 } />
+        <directionalLight castShadow position={[-5, 5, 5]} shadow-mapSize-width={1024} shadow-mapSize-height={1024} intensity={ 1.5 } />
 
         <ambientLight intensity={ 0.5 } />
-        {/* <Suspense fallback={null}>
-            {[...Array(numberOfFoxes)].map((value, index)=>
-                <Fox 
+
+        <Suspense fallback={null}>
+            {[...Array(numberOfModels)].map((value, index)=>
+                <Stacy 
                     key={`index${index}`} 
                     keyName={`count${index}`} 
-                    foxAnimation='Walk'  
-                    scale={ 0.02 } 
-                    position={positionFox[index]} 
-                    foxName={`count${index}`} 
+                    pose={Math.floor(Math.random() * 9)}
+                    position={positionModels[index]} 
+                    modelName={modelNames[Math.floor(Math.random() * 24)]} 
                 />
                 
             )}
-        </Suspense> */}
-        <Fox 
-            // key={`index${index}`} 
-            foxAnimation='Run'  
-            scale={ 0.02 } 
-            position={[2, -1, 0]} 
-            foxName='하카'
-        />
-        <Fox 
-            // key={`index${index}`} 
-            foxAnimation='Run'  
-            scale={ 0.02 } 
-            position={[0, -1, 0]} 
-            foxName='하카'
-        />
-
-        
-        <mesh 
-            position-y={ - 1 } 
-            rotation-x={ - Math.PI * 0.5 } 
-            scale={ 20 }
-        >
-            <planeGeometry />
-            <meshBasicMaterial color="yellowgreen" />
+        </Suspense>
+        <mesh rotation={[-0.5 * Math.PI, 0, 0]} position={[0, -1, 0]} receiveShadow >
+            <planeBufferGeometry args={[10, 10, 1, 1]} />
+            <shadowMaterial transparent opacity={0.2} />
         </mesh>
+        <Rig />
 
 
     </>
