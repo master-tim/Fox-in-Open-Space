@@ -1,7 +1,7 @@
 import { OrbitControls, Html } from "@react-three/drei"
 import { Perf } from "r3f-perf"
 import React, { useRef, useEffect, useState } from "react"
-// import * as THREE from "three"
+import * as THREE from "three"
 import { useControls } from "leva"
 
 import Fox from "./Fox"
@@ -35,14 +35,12 @@ export default function Experience(){
 
     useFrame((state) => 
     {
-        // console.log(state.camera.position)
-        // console.log([Math.random(), Math.random(), Math.random() ])
-        // console.log(randPos());
-        // state.camera.position.x = 5*Math.sin(state.clock.elapsedTime)
-        // state.camera.position.z = 5*Math.cos(state.clock.elapsedTime)
-
+        state.camera.position.x = foxPosition[0]
+        state.camera.position.y = foxPosition[1] + 4
+        state.camera.position.z = foxPosition[2] - 8
+        state.camera.lookAt(foxPosition[0], foxPosition[1], foxPosition[2])
     })
-    // THREE.Camera.getWorldDirection(THREE.Vector3(0, 0, 0))
+
 
 
     switch (key)
@@ -56,13 +54,13 @@ export default function Experience(){
         case 'KeyE': foxAnimation = foxAnimationOptions[1]
         break
     }
-    // console.log(foxAnimation)
+    console.log(foxAnimation)
 
     return <>
     
         <Perf position="top-left"/>
 
-        <OrbitControls makeDefault/>
+        {/* <OrbitControls makeDefault/> */}
 
         <directionalLight 
             position={ [ 1, 2, 3 ] } 
