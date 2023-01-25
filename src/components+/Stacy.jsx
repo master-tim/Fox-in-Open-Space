@@ -20,10 +20,11 @@ export default function Stacy({ pose, ...props }) {
   // Hover and animation-index states
   const [hovered, setHovered] = useState(false)
   const [index, setIndex] = useState(pose)
+
   // Animate the selection halo
-  const { color, scale } = useSpring({ scale: hovered ? [1.15, 1.15, 1] : [1, 1, 1], color: hovered ? "hotpink" : "aquamarine" })
+  // const { color, scale } = useSpring({ scale: hovered ? [1.15, 1.15, 1] : [1, 1, 1], color: hovered ? "hotpink" : "aquamarine" })
   // Change cursor on hover-state
-  useCursor(hovered)
+  // useCursor(hovered)
 
   // Change animation when the index changes
   useEffect(() => {
@@ -63,10 +64,6 @@ export default function Stacy({ pose, ...props }) {
           <meshStandardMaterial map={texture} map-flipY={false} skinning />
         </skinnedMesh>
       </group>
-      <a.mesh receiveShadow position={[0, 1, -1]} scale={scale}>
-        <circleBufferGeometry args={[0.6, 32]} />
-        <a.meshStandardMaterial color={color} />
-      </a.mesh>
     </group>
   )
 }
