@@ -28,9 +28,9 @@ export default function Stacy({ pose, ...props }) {
   // Change animation when the index changes
   useEffect(() => {
     // Reset and fade in animation after an index has been changed
-    actions[names[index]].reset().fadeIn(0.5).play()
+    actions[names[index]].reset().fadeIn(0.2).play()
     // In the clean-up phase, fade it out
-    return () => actions[names[index]].fadeOut(0.5)
+    return () => actions[names[index]].fadeOut(0.2)
   }, [index, actions, names])
 
   return (

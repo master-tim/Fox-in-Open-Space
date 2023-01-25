@@ -3,6 +3,7 @@ import { Perf } from "r3f-perf"
 import React, { useRef, useEffect, useState, useMemo, Suspense } from "react"
 import { useFrame, useGraph } from "@react-three/fiber"
 import Stacy from "./Stacy"
+import { useControls } from "leva"
 
 function Rig() {
     return useFrame((state) => {
@@ -13,8 +14,10 @@ function Rig() {
 
 export default function Experience(){
 
-    const numberOfModels = 3
-
+    const { numberOfModels } = useControls ('number of models', {
+        numberOfModels : {value: 3}
+    })
+    
     const positionModels = useMemo(()=>
     {
         const position = []
@@ -26,37 +29,11 @@ export default function Experience(){
             temp.push(5*(Math.random()-0.5))
             position.push(temp)
         }
-        
         return position
+        
     }, [numberOfModels])
 
-    const modelNames = [
-     'Debra',
-     'Judith',
-     'Anne',
-     'Janet',
-     'Carolyn',
-     'Mildred',
-     'Deborah',
-     'Dorothy',
-     'Susan',
-     'Norma',
-     'Cheryl',
-     'Barbara',
-     'Ashley',
-     'Linda',
-     'Brenda',
-     'Laura',
-     'Tammy',
-     'Emily',
-     'Elizabeth',
-     'Irene',
-     'Paula',
-     'Amy',
-     'Frances',
-     'Christina',
-     'Cynthia',
-    ]
+    const modelNames = ['Debra','Judith','Anne','Janet','Carolyn','Mildred','Deborah','Dorothy','Susan','Norma','Cheryl','Barbara','Ashley','Linda','Brenda','Laura','Tammy','Emily','Elizabeth','Irene','Paula','Amy','Frances','Christina','Cynthia']
 
     return <>
     
