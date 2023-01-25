@@ -1,8 +1,10 @@
 import { Perf } from "r3f-perf"
 import React, { useRef, useEffect, useState } from "react"
 import { useFrame } from "@react-three/fiber"
-import { Html } from "@react-three/drei"
+import { DirectionalLightHelper } from "three"
+import { Html, OrbitControls, useHelper } from "@react-three/drei"
 import { useControls } from "leva"
+
 
 import Fox from "./Fox"
 import Grass from "./Grass"
@@ -40,14 +42,28 @@ export default function Experience(){
     const right = useKeyPress('d')
 
     const cubeRef = useRef()
-    
-    
+    const grass = useRef()
+    const directionalLight = useRef()
+
+    useHelper(directionalLight, DirectionalLightHelper, 'blue')
+
     useFrame((state, delta) => 
     {
-        state.camera.position.x = cubeRef.current.position.x
-        state.camera.position.y = cubeRef.current.position.y + 4
-        state.camera.position.z = cubeRef.current.position.z + 5
-        state.camera.lookAt(cubeRef.current.position.x, cubeRef.current.position.y , cubeRef.current.position.z)
+        // state.camera.position.x = cubeRef.current.position.x
+        // state.camera.position.y = cubeRef.current.position.y + 4
+        // state.camera.position.z = cubeRef.current.position.z + 5
+        // state.camera.lookAt(cubeRef.current.position.x, cubeRef.current.position.y , cubeRef.current.position.z)
+
+        // directionalLight.current.position.x = cubeRef.current.position.x - 2
+        // directionalLight.current.position.y = cubeRef.current.position.y + 5
+        // directionalLight.current.position.z = cubeRef.current.position.z + 10
+
+        directionalLight.current.target.position.x = cubeRef.current.position.x 
+        directionalLight.current.target.position.y = cubeRef.current.position.y 
+        directionalLight.current.target.position.z = cubeRef.current.position.z 
+
+        console.log(directionalLight.current.target.position.x);
+
         cubeRef.current.rotation.y -= delta * 0.5
         // cubeRef.current.position.x = Math.sin(state.clock.elapsedTime)* 5
         // cubeRef.current.position.z = Math.cos(state.clock.elapsedTime)* 5
@@ -67,28 +83,34 @@ export default function Experience(){
             cubeRef.current.position.x += 0.05
             console.log('right');
         }
-        // console.log(cubeRef.current.position.x)
+        // console.log(directionalLight.current)
     })
 
     return <>
     
         <Perf position="top-left"/>
 
+        <OrbitControls makeDefault/>
+        
         <directionalLight 
-            position={ [ 1, 2, 3 ] } 
-            intensity={ 1.5 } 
+            ref={directionalLight}
+            castShadow
+            position={[-2, 90, 90]} 
+            shadow-mapSize-width={1024} 
+            shadow-mapSize-height={1024} 
+            intensity={ 1 }
         />
 
         <ambientLight intensity={ 0.5 } />
 
-        <Grass />
+        <Grass ref={grass}/>
         
         {/* <Fox position={foxPosition} scale={ 0.02 } foxAnimation={'Walk'}  foxName='하카'>
         </Fox>  */}
         
-        <mesh ref={ cubeRef } rotation-y={ Math.PI * 0.25 } scale={ 1.5 }>
+        <mesh ref={ cubeRef } castShadow receiveShadow rotation-y={ Math.PI * 0.25 } scale={ 1 } >
             <boxGeometry />
-            <meshStandardMaterial color="mediumpurple" />
+            <meshStandardMaterial color="pink" />
         </mesh>
 
     </>
