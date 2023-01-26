@@ -2,16 +2,12 @@ import { Perf } from "r3f-perf"
 import React, { useRef, useEffect, useState } from "react"
 import { useFrame } from "@react-three/fiber"
 import { DirectionalLightHelper } from "three"
-import { Html, OrbitControls, useHelper } from "@react-three/drei"
-import { useControls } from "leva"
+import { Html, OrbitControls, useHelper, useAnimations, useGLTF  } from "@react-three/drei"
 
-
-import Fox from "./Fox"
 import Grass from "./Grass"
 
 const useKeyPress = targetKey => {
     const [keyPressed, setKeyPressed] = useState(false)
-    const [posX, setPosX] = useState(0)
   
     const downHandler = ({ key }) => {
       if (key === targetKey) setKeyPressed(true)
@@ -41,7 +37,10 @@ export default function Experience(){
     const left = useKeyPress('a')
     const right = useKeyPress('d')
 
-    const cubeRef = useRef()
+    const fox = useGLTF('../Fox/glTF/Fox.gltf')
+    const animations = useAnimations(fox.animations, fox.scene)
+    const  action = animations.actions['Run'].play()
+
     const grass = useRef()
     const directionalLight = useRef()
 
@@ -49,44 +48,54 @@ export default function Experience(){
 
     useFrame((state, delta) => 
     {
-        // console.log(grass.current)
+        console.log(fox.current.rotation.y)
 
-        state.camera.position.x = cubeRef.current.position.x
-        state.camera.position.y = cubeRef.current.position.y + 4
-        state.camera.position.z = cubeRef.current.position.z + 5
-        state.camera.lookAt(cubeRef.current.position.x, cubeRef.current.position.y , cubeRef.current.position.z)
+        state.camera.position.x = fox.current.position.x
+        state.camera.position.y = fox.current.position.y + 4
+        state.camera.position.z = fox.current.position.z + 5
+        state.camera.lookAt(fox.current.position.x, fox.current.position.y , fox.current.position.z)
 
-        directionalLight.current.position.x = cubeRef.current.position.x - 2
-        directionalLight.current.position.y = cubeRef.current.position.y + 5
-        directionalLight.current.position.z = cubeRef.current.position.z + 10
+        directionalLight.current.position.x = fox.current.position.x - 2
+        directionalLight.current.position.y = fox.current.position.y + 5
+        directionalLight.current.position.z = fox.current.position.z + 10
 
-        directionalLight.current.target.position.x = cubeRef.current.position.x 
-        directionalLight.current.target.position.y = cubeRef.current.position.y 
-        directionalLight.current.target.position.z = cubeRef.current.position.z 
-
-        // console.log(directionalLight.current.target.position.x);
-
-        cubeRef.current.rotation.y -= delta * 0.5
+        directionalLight.current.target.position.x = fox.current.position.x 
+        directionalLight.current.target.position.y = fox.current.position.y 
+        directionalLight.current.target.position.z = fox.current.position.z 
 
         if (forward){
-            cubeRef.current.position.z -= 0.05
+            fox.current.position.z -= 0.05
             console.log('forward')
         }
         else if (back){
-            cubeRef.current.position.z += 0.05
+            fox.current.position.z += 0.05
             console.log('backward')
         }
         else if (left){
-            cubeRef.current.position.x -= 0.05
+            fox.current.position.x -= 0.05
             console.log('left')
         }
         else if (right){
-            cubeRef.current.position.x += 0.05
+            fox.current.position.x += 0.05
             console.log('right')
         }
 
     })
-    useEffect(()=>console.log(grass.current),[])
+    useEffect(()=>{
+        if (forward && fox.current.rotation.y != Math.PI){
+            fox.current.rotation.y = Math.PI
+        }
+        else if (back && fox.current.rotation.y != 0){
+            fox.current.rotation.y = 0
+        }
+        else if (right && fox.current.rotation.y != Math.PI/2){
+            fox.current.rotation.y = Math.PI/2
+        }
+        else if (left && fox.current.rotation.y != Math.PI*1.5){
+            fox.current.rotation.y = Math.PI*1.5
+        }
+
+    },[forward, back, left, right])
 
     return <>
     
@@ -107,13 +116,9 @@ export default function Experience(){
 
         <Grass ref={grass}/>
         
-        {/* <Fox ref={fox} position={foxPosition} scale={ 0.02 } foxAnimation={'Walk'}  foxName='하카'>
-        </Fox>  */}
-        
-        <mesh ref={ cubeRef } castShadow receiveShadow position={[0,0,0]}rotation-y={ Math.PI * 0.25 } scale={ 1 } >
-            <boxGeometry />
-            <meshStandardMaterial color="pink" />
-        </mesh>
+
+        <primitive ref={fox} position={[0, -1, 0]} rotation-y={Math.PI} scale={ 0.02 } object={fox.scene} />
+
 
     </>
 }
