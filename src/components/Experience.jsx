@@ -48,7 +48,7 @@ export default function Experience(){
 
     useFrame((state, delta) => 
     {
-        console.log(fox.current.rotation.y)
+        // console.log(fox.current.rotation.y)
 
         state.camera.position.x = fox.current.position.x
         state.camera.position.y = fox.current.position.y + 4
@@ -79,9 +79,16 @@ export default function Experience(){
             fox.current.position.x += 0.05
             console.log('right')
         }
+        else{
+            console.log('stop')
+            action.fadeOut(0)
+        }
 
     })
     useEffect(()=>{
+
+        action.reset().fadeIn().play()
+
         if (forward && fox.current.rotation.y != Math.PI){
             fox.current.rotation.y = Math.PI
         }
