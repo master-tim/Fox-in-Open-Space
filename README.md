@@ -6,10 +6,6 @@ This project is a simple game that allows the player to control a fox in an open
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### Prerequisites
-
-- Node.js
-- npm or yarn
 
 ### Installing
 
